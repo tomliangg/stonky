@@ -1,14 +1,14 @@
 const fs = require("fs");
-import chalk from "chalk";
 
-export const readDataFile = (callback: Function) => {
-  fs.readFile(__dirname + "/../data.json", "utf8", (err: Error, jsonString: string) => {
-		if (err) {
-			console.log(chalk.bold.red("File read failed:", err));
-			return;
-		}
-
-    callback(jsonString);
+export const readDataFile = () => {
+  return new Promise<string>((resolve, reject) => {
+    fs.readFile(__dirname + "/../data.json", "utf8", (err: Error, jsonString: string) => {
+      if (err) {
+        return reject(err);
+      }
+  
+      return resolve(jsonString);
+    });
   });
 };
 
