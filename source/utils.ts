@@ -30,7 +30,7 @@ export const parse = (result: typeof sampleResult) => {
     }
 
     if (num < 0) {
-      return `-${num}${suffix}`;
+      return `${num}${suffix}`;
     }
 
     return num;
