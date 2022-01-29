@@ -1,4 +1,5 @@
 const fs = require("fs");
+import { sampleResult } from "./sampleData";
 
 export const readDataFile = () => {
   return new Promise<string>((resolve, reject) => {
@@ -21,3 +22,26 @@ export const writeToDataFile = (jsonString: string, callback: Function) => {
     callback();
   });
 };
+
+export const parse = (result: typeof sampleResult) => {
+  const convertNum = (num: number, suffix="") => {
+    if (num > 0) {
+      return `+${num}${suffix}`;
+    }
+
+    if (num < 0) {
+      return `-${num}${suffix}`;
+    }
+
+    return num;
+  };
+
+  return result.map(r => ({
+    Symbol: r.symbol,
+    Name: r.displayName,
+    Price: r.regularMarketPrice,
+    Change: convertNum(r.regularMarketChange),
+    Diff: convertNum(r.regularMarketChangePercent, "%"),
+    Currency: r.currency,
+  }));
+}
