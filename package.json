@@ -9,6 +9,7 @@
 	"scripts": {
 		"build": "tsc",
 		"start": "npm run build && dist/cli.js",
+		"postinstall": "node init",
 		"pretest": "npm run build",
 		"test": "xo && ava"
 	},
@@ -17,6 +18,7 @@
 	],
 	"dependencies": {
 		"ink": "^3.2.0",
+		"ink-spinner": "^4.0.3",
 		"meow": "^9.0.0",
 		"react": "^17.0.2"
 	},
