@@ -23,14 +23,17 @@ export const writeToDataFile = (jsonString: string, callback: Function) => {
   });
 };
 
+// https://stackoverflow.com/a/11832950
+const roundToTwoDecimals = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100
+
 export const parse = (result: typeof sampleResult) => {
   const convertNum = (num: number, suffix="") => {
     if (num > 0) {
-      return `+${num}${suffix}`;
+      return `+${roundToTwoDecimals(num)}${suffix}`;
     }
 
     if (num < 0) {
-      return `${num}${suffix}`;
+      return `${roundToTwoDecimals(num)}${suffix}`;
     }
 
     return num;
@@ -42,6 +45,7 @@ export const parse = (result: typeof sampleResult) => {
     Price: r.regularMarketPrice,
     Change: convertNum(r.regularMarketChange),
     Diff: convertNum(r.regularMarketChangePercent, "%"),
+    "Day Range": r.regularMarketDayRange,
     Currency: r.currency,
   }));
 }
