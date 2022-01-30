@@ -1,53 +1,57 @@
-const fs = require("fs");
-import { sampleResult } from "./sampleData";
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import {sampleResult} from './sample-data';
 
-export const readDataFile = () => {
-  return new Promise<string>((resolve, reject) => {
-    fs.readFile(__dirname + "/../data.json", "utf8", (err: Error, jsonString: string) => {
-      if (err) {
-        return reject(err);
-      }
-  
-      return resolve(jsonString);
-    });
-  });
-};
+export const readDataFile = async () => new Promise<string>((resolve, reject) => {
+	// Disable unicorn/prefer-module so that it allows __dirname
+	// eslint-disable-next-line unicorn/prefer-module
+	fs.readFile(path.resolve(__dirname, '../data.json'), 'utf8', (error, jsonString: string) => {
+		if (error) {
+			reject(error);
+			return;
+		}
 
-export const writeToDataFile = (jsonString: string, callback: Function) => {
-  fs.writeFile(__dirname + "/../data.json", jsonString, (err: Error) => {
-    if (err) {
-      throw err;
-    }
-    
-    callback();
-  });
+		resolve(jsonString);
+	});
+});
+
+export const writeToDataFile = (jsonString: string, callback: () => void) => {
+	// Disable unicorn/prefer-module so that it allows __dirname
+	// eslint-disable-next-line unicorn/prefer-module
+	fs.writeFile(path.resolve(__dirname, '../data.json'), jsonString, error => {
+		if (error) {
+			throw error;
+		}
+
+		callback();
+	});
 };
 
 // https://stackoverflow.com/a/11832950
-const roundToTwoDecimals = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100
+const roundToTwoDecimals = (number_: number) => Math.round((number_ + Number.EPSILON) * 100) / 100;
 
 // https://stackoverflow.com/a/39967296
-const truncate = (s: string) => s.replace(/(.{15})..+/, "$1…");
+const truncate = (s: string) => s.replace(/(.{15})..+/, '$1…');
 
 export const parse = (result: typeof sampleResult) => {
-  const convertNum = (num: number, suffix="") => {
-    if (num > 0) {
-      return `+${roundToTwoDecimals(num)}${suffix}`;
-    }
+	const convertNumber = (number_: number, suffix = '') => {
+		if (number_ > 0) {
+			return `+${roundToTwoDecimals(number_)}${suffix}`;
+		}
 
-    if (num < 0) {
-      return `${roundToTwoDecimals(num)}${suffix}`;
-    }
+		if (number_ < 0) {
+			return `${roundToTwoDecimals(number_)}${suffix}`;
+		}
 
-    return num;
-  };
+		return number_;
+	};
 
-  return result.map(r => ({
-    Symbol: r.symbol,
-    Name: truncate(r.shortName),
-    Price: `${r.regularMarketPrice} ${r.currency}`,
-    Change: convertNum(r.regularMarketChange),
-    Diff: convertNum(r.regularMarketChangePercent, "%"),
-    "Day Range": r.regularMarketDayRange,
-  }));
-}
+	return result.map(r => ({
+		Symbol: r.symbol,
+		Name: truncate(r.shortName),
+		Price: `${r.regularMarketPrice} ${r.currency}`,
+		Change: convertNumber(r.regularMarketChange),
+		Diff: convertNumber(r.regularMarketChangePercent, '%'),
+		'Day Range': r.regularMarketDayRange,
+	}));
+};

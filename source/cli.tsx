@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// import React from 'react';
-// import { render } from 'ink';
+import React from 'react';
+import {render} from 'ink';
 import meow from 'meow';
-import chalk from "chalk";
-// import App from './ui';
-import { readDataFile, writeToDataFile } from "./utils";
+import chalk from 'chalk';
+import App from './ui';
+import {readDataFile, writeToDataFile} from './utils';
 
-interface DataObj {
+interface DataObject {
 	symbols: string[];
 	apiKey: string;
 }
@@ -25,17 +25,17 @@ const cli = meow(`
 `, {
 	flags: {
 		add: {
-			type: "string",
-			alias: "a"
+			type: 'string',
+			alias: 'a',
 		},
 		delete: {
-			type: "string",
-			alias: "d",
+			type: 'string',
+			alias: 'd',
 		},
 		list: {
-			type: "boolean",
-			alias: "l",
-		}
+			type: 'boolean',
+			alias: 'l',
+		},
 	},
 	booleanDefault: undefined,
 });
@@ -44,9 +44,9 @@ const addFlagString = cli.flags.add;
 const deleteFlagString = cli.flags.delete;
 
 readDataFile()
-	.then((jsonString) => {
-		const data = JSON.parse(jsonString) as DataObj;
-		const { symbols, apiKey } = data;
+	.then(jsonString => {
+		const data = JSON.parse(jsonString) as DataObject;
+		const {symbols, apiKey} = data;
 
 		if (addFlagString) {
 			if (symbols.includes(addFlagString)) {
@@ -54,27 +54,35 @@ readDataFile()
 			} else {
 				symbols.push(addFlagString);
 				writeToDataFile(JSON.stringify(data), () => {
-					console.log(chalk.greenBright(`${addFlagString} has been added to your list.\nYour current list has: ${symbols.join(", ")}`));
+					console.log(chalk.greenBright(`${addFlagString} has been added to your list.\nYour current list has: ${symbols.join(', ')}`));
 				});
 			}
 		}
-		
+
 		if (deleteFlagString) {
 			const indexToDelete = symbols.indexOf(deleteFlagString);
 			if (indexToDelete > -1) {
 				symbols.splice(indexToDelete, 1);
 				writeToDataFile(JSON.stringify(data), () => {
-					console.log(chalk.greenBright(`${deleteFlagString} has been deleted from your list.\nYour current list has: ${symbols.join(", ")}`));
+					console.log(chalk.greenBright(`${deleteFlagString} has been deleted from your list.\nYour current list has: ${symbols.join(', ')}`));
 				});
 			} else {
 				console.log(chalk.yellowBright(`${deleteFlagString} is not on your list.\nOperation is invalid. Your list remains unchanged`));
 			}
 		}
-		
+
 		if (cli.flags.list) {
-			console.log(chalk.blueBright(`Your current list has: ${symbols.join(", ")}`));
+			console.log(chalk.blueBright(`Your current list has: ${symbols.join(', ')}`));
+		}
+
+		if (Object.keys(cli.flags).length === 0) {
+			if (symbols.length > 0) {
+				render(<App apiKey={apiKey} symbols={symbols}/>);
+			} else {
+				console.log(chalk.redBright('You don\'t have anything on your watch list. Make sure to have at least 1 stock symbol on your list. See --help to learn how to add a stock symbol.'));
+			}
 		}
 	})
-	.catch((e) => {
-		console.log(chalk.bold.red("File read failed:", e));
+	.catch(error => {
+		console.log(chalk.bold.red('File read failed:', error));
 	});

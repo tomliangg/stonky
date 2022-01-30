@@ -37,7 +37,18 @@
 	"xo": {
 		"extends": "xo-react",
 		"rules": {
-			"react/prop-types": "off"
+			"react/prop-types": "off",
+			"@typescript-eslint/naming-convention": "off",
+			"import/extensions": [
+				"error",
+				"ignorePackages",
+				{
+					"js": "never",
+					"jsx": "never",
+					"ts": "never",
+					"tsx": "never"
+				}
+			]
 		}
 	},
 	"devDependencies": {
