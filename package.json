@@ -1,6 +1,6 @@
 {
 	"name": "stonky",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"license": "MIT",
 	"author": {
 		"name": "Tom Liang",
@@ -19,12 +19,13 @@
 	"scripts": {
 		"build": "tsc",
 		"start": "npm run build && dist/cli.js",
-		"postinstall": "node init",
+		"postinstall": "node init.js",
 		"pretest": "npm run build",
 		"test": "xo && ava"
 	},
 	"files": [
-		"dist/cli.js"
+		"dist/*",
+		"init.js"
 	],
 	"dependencies": {
 		"axios": "^0.25.0",
