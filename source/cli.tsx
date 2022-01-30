@@ -13,7 +13,7 @@ interface DataObject {
 
 const cli = meow(`
 	Usage
-	  $ stock-helper
+	  $ stonky
 
 	Options
 		--add  stock symbol to add to your watch list (i.e. AAPL)
@@ -22,7 +22,7 @@ const cli = meow(`
 		--key update your Yahoo Finance API Key
 
 	Examples
-	  $ stock-helper --add=AAPL
+	  $ stonky --add=AAPL
 `, {
 	flags: {
 		add: {
@@ -47,6 +47,7 @@ const cli = meow(`
 
 const addFlagString = cli.flags.add;
 const deleteFlagString = cli.flags.delete;
+const keyFlagString = cli.flags.key;
 
 readDataFile()
 	.then(jsonString => {
@@ -78,6 +79,16 @@ readDataFile()
 
 		if (cli.flags.list) {
 			console.log(chalk.blueBright(`Your current list has: ${symbols.join(', ')}`));
+		}
+
+		if (keyFlagString) {
+			const newData = {
+				...data,
+				apiKey: keyFlagString,
+			};
+			writeToDataFile(JSON.stringify(newData), () => {
+				console.log(chalk.greenBright(`Your apiKey has been updated successfully to: ${keyFlagString}`));
+			});
 		}
 
 		if (Object.keys(cli.flags).length === 0) {

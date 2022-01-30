@@ -1,6 +1,6 @@
 {
-	"name": "stock-helper",
-	"version": "0.0.0",
+	"name": "stonky",
+	"version": "0.1.0",
 	"license": "MIT",
 	"bin": "dist/cli.js",
 	"engines": {

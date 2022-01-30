@@ -34,9 +34,9 @@ const App: FC<AppType> = props => {
 				if (axios.isAxiosError(error)) {
 					if (error.response?.status === 403) {
 						setErrorMessage('Please make sure your api key is valid or correctly entered');
+					} else {
+						setErrorMessage(JSON.stringify(error));
 					}
-
-					setErrorMessage(JSON.stringify(error));
 				} else {
 					setErrorMessage(error.message);
 				}
