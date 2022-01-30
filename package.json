@@ -12,6 +12,13 @@
 		"stock watcher CLI",
 		"CLI"
 	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tomliangg/stonky.git"
+	},
+	"bugs": {
+		"url": "https://github.com/tomliangg/stonky/issues"
+	},
 	"bin": "dist/cli.js",
 	"engines": {
 		"node": ">=10"
