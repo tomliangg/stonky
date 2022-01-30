@@ -26,6 +26,9 @@ export const writeToDataFile = (jsonString: string, callback: Function) => {
 // https://stackoverflow.com/a/11832950
 const roundToTwoDecimals = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100
 
+// https://stackoverflow.com/a/39967296
+const truncate = (s: string) => s.replace(/(.{15})..+/, "$1…");
+
 export const parse = (result: typeof sampleResult) => {
   const convertNum = (num: number, suffix="") => {
     if (num > 0) {
@@ -41,11 +44,10 @@ export const parse = (result: typeof sampleResult) => {
 
   return result.map(r => ({
     Symbol: r.symbol,
-    Name: r.displayName,
-    Price: r.regularMarketPrice,
+    Name: truncate(r.shortName),
+    Price: `${r.regularMarketPrice} ${r.currency}`,
     Change: convertNum(r.regularMarketChange),
     Diff: convertNum(r.regularMarketChangePercent, "%"),
     "Day Range": r.regularMarketDayRange,
-    Currency: r.currency,
   }));
 }
