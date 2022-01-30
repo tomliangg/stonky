@@ -19,6 +19,7 @@ const cli = meow(`
 		--add  stock symbol to add to your watch list (i.e. AAPL)
 		--delete stock symbol to delete from your watch list
 		--list list out all the stock symbols on your watch list
+		--key update your Yahoo Finance API Key
 
 	Examples
 	  $ stock-helper --add=AAPL
@@ -35,6 +36,10 @@ const cli = meow(`
 		list: {
 			type: 'boolean',
 			alias: 'l',
+		},
+		key: {
+			type: 'string',
+			alias: 'k',
 		},
 	},
 	booleanDefault: undefined,
@@ -76,11 +81,17 @@ readDataFile()
 		}
 
 		if (Object.keys(cli.flags).length === 0) {
-			if (symbols.length > 0) {
-				render(<App apiKey={apiKey} symbols={symbols}/>);
-			} else {
-				console.log(chalk.redBright('You don\'t have anything on your watch list. Make sure to have at least 1 stock symbol on your list. See --help to learn how to add a stock symbol.'));
+			if (apiKey.length === 0) {
+				console.log(chalk.redBright('Please add an apiKey first. Follow the instructuions on https://www.yahoofinanceapi.com/tutorial to obtain a free apiKey and then use --key flag to update apiKey'));
+				return;
 			}
+
+			if (symbols.length === 0) {
+				console.log(chalk.redBright('You don\'t have anything on your watch list. Make sure to have at least 1 stock symbol on your list. See --help to learn how to add a stock symbol.'));
+				return;
+			}
+
+			render(<App apiKey={apiKey} symbols={symbols}/>);
 		}
 	})
 	.catch(error => {
