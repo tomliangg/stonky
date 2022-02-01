@@ -1,6 +1,13 @@
 # stonky
 
-> A Stock Watcher CLI to get the latest stock prices from Yahoo. Built with [Ink](https://github.com/vadimdemedes/ink)
+> A Stock Watch CLI to get the latest stock prices from 
+[Yahoo](finance.yahoo.com) at the current timestamp. 
+Built with [Ink](https://github.com/vadimdemedes/ink).
+
+
+## Prerequisite
+1. Install an LTS versions of [node.js](https://nodejs.org/en/)
+2. Have a Yahoo Fianance api key (it's free; follow the [instructions](https://www.yahoofinanceapi.com/tutorial))
 
 
 ## Install
@@ -30,11 +37,20 @@ $ stonky --help
     $ stonky --key=<your_yahoo_finance_api_key>
     $ stonky
 
-┌─────────┬──────────────────┬─────────────┬────────┬────────┬───────────────────┐
-│ Symbol  │ Name             │ Price       │ Change │ Diff   │ Day Range         │
-├─────────┼──────────────────┼─────────────┼────────┼────────┼───────────────────┤
-│ FB      │ Meta Platforms,… │ 301.71 USD  │ +7.07  │ +2.4%  │ 293.0333 - 301.83 │
-├─────────┼──────────────────┼─────────────┼────────┼────────┼───────────────────┤
-│ SHOP.TO │ SHOPIFY INC      │ 1113.98 CAD │ +73.95 │ +7.11% │ 1013.72 - 1116.26 │
-└─────────┴──────────────────┴─────────────┴────────┴────────┴───────────────────┘
+Stock prices as of 2022-01-31 16:43:30
+┌─────────┬──────────────────┬─────────────┬─────────┬─────────┬───────────────────┐
+│ Symbol  │ Name             │ Price       │ Change  │ Diff    │ Day Range         │
+├─────────┼──────────────────┼─────────────┼─────────┼─────────┼───────────────────┤
+│ FB      │ Meta Platforms,… │ 313.26 USD  │ +11.55  │ +3.83%  │ 299.32 - 313.78   │
+├─────────┼──────────────────┼─────────────┼─────────┼─────────┼───────────────────┤
+│ SHOP.TO │ SHOPIFY INC      │ 1226.95 CAD │ +112.97 │ +10.14% │ 1117.74 - 1230.85 │
+└─────────┴──────────────────┴─────────────┴─────────┴─────────┴───────────────────┘
 ```
+
+
+## Demo
+stonky running in dark background terminal:  
+![stonky running in dark background terminal](/demo/stonky_run_on_dark_bg.png)  
+
+stonky running in light background terminal:  
+![Stonky running in light background terminal](/demo/stonky_run_on_light_bg.png)
