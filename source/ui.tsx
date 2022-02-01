@@ -2,7 +2,7 @@ import React, {useEffect, useState, FC} from 'react';
 import axios, {AxiosError} from 'axios';
 import {Text} from 'ink';
 import Table from 'ink-table';
-import {parse} from './utils';
+import {parse, getCurrentTime} from './utils';
 import {sampleResult} from './sample-data';
 
 interface AppType {
@@ -48,18 +48,21 @@ const App: FC<AppType> = props => {
 	}
 
 	return result.length > 0 ? (
-		<Table
-			data={parse(result)} cell={props => {
-				if (props.children?.toString().trim().startsWith('-')) {
-					return <Text color="red">{props.children}</Text>;
-				}
+		<>
+			<Text backgroundColor="#1266f1">Stock prices as of {getCurrentTime()}</Text>
+			<Table
+				data={parse(result)} cell={props => {
+					if (props.children?.toString().trim().startsWith('-')) {
+						return <Text color="red">{props.children}</Text>;
+					}
 
-				if (props.children?.toString().trim().startsWith('+')) {
-					return <Text color="green">{props.children}</Text>;
-				}
+					if (props.children?.toString().trim().startsWith('+')) {
+						return <Text color="green">{props.children}</Text>;
+					}
 
-				return <Text>{props.children}</Text>;
-			}}/>
+					return <Text>{props.children}</Text>;
+				}}/>
+		</>
 
 	) : <Text color="cyan">Loading...</Text>;
 };

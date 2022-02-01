@@ -55,3 +55,17 @@ export const parse = (result: typeof sampleResult) => {
 		'Day Range': r.regularMarketDayRange,
 	}));
 };
+
+// YYYY-MM-DD hh:mm:ss format
+export const getCurrentTime = () => {
+	const d = new Date();
+
+	const date = ('0' + String(d.getDate())).slice(-2);
+	const month = ('0' + String(d.getMonth() + 1)).slice(-2);
+	const year = d.getFullYear();
+	const hour = d.getHours();
+	const minute = d.getMinutes();
+	const second = d.getSeconds();
+
+	return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
+};
