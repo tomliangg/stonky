@@ -6,7 +6,7 @@ Built with [Ink](https://github.com/vadimdemedes/ink).
 
 
 ## Prerequisite
-1. Install an LTS versions of [node.js](https://nodejs.org/en/)
+1. Install an LTS versions of [node.js](https://nodejs.org/en/). Make sure node.js version >= 10 (Debnium)
 2. Have a Yahoo Fianance api key (it's free; follow the [instructions](https://www.yahoofinanceapi.com/tutorial))
 
 
