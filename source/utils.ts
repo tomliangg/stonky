@@ -1,5 +1,7 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
+/* eslint-disable unicorn/prefer-node-protocol */
+import * as fs from 'fs';
+import * as path from 'path';
+/* eslint-enable unicorn/prefer-node-protocol */
 import {sampleResult} from './sample-data';
 
 export const readDataFile = async () => new Promise<string>((resolve, reject) => {
