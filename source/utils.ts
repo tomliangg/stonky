@@ -50,8 +50,10 @@ export const parse = (result: typeof sampleResult) => {
 
 	return result.map(r => ({
 		Symbol: r.symbol,
-		Name: truncate(r.shortName),
-		Price: `${r.regularMarketPrice} ${r.currency}`,
+		// If Yahoo Finance doesn't track the symbol or users has a typo, the data can be undefined
+		// use a fallback value to prevent exception
+		Name: truncate(r.shortName || ''),
+		Price: `${r.regularMarketPrice || ''} ${r.currency || ''}`,
 		Change: convertNumber(r.regularMarketChange),
 		Diff: convertNumber(r.regularMarketChangePercent, '%'),
 		'Day Range': r.regularMarketDayRange,
